@@ -1,6 +1,7 @@
 import os
 import tornado.web
 import tornado.websocket
+import time
 
 # Constants.
 APP_NAME      = u"Tornado On OpenShift"
@@ -48,6 +49,7 @@ def hot_deploy_marker():
 # @route("/").
 class HomePageHandler(tornado.web.RequestHandler):
    def get(self):
+      self.set_cookie("wsecho", "@%d" % time.time());
       self.render("index.html")
 
 
@@ -79,6 +81,10 @@ class WebSocketEchoHandler(tornado.websocket.WebSocketHandler):
       self.write_message(u"ws-echo: 418 I'm a teapot (as per RFC 2324)")
 
    def on_message(self, message):
-      self.write_message(u"ws-echo: " + message)
+      try:
+          self.write_message(u"ws-echo: msg=" + message + u"\n" +
+              u"ws-echo: cookies=" + self.request.headers.get('Cookie', 'None'))
+      except Exception, ex:
+          print "Got error %s" % ex.strerror()
 
 
