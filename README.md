@@ -26,7 +26,7 @@ Create a python-2.6 or a diy-0.1 application (you can name it anything via -a)
 Add this `github openshift-tornado-websockets` repository
 
     cd tornado
-    git remote add upstream -m master git@github.com:ramr/openshift-tornado-websockets.git
+    git remote add upstream -m master git@github.com:mrunalp/openshift-tornado-websockets.git
     git pull -s recursive -X theirs upstream master
     
 Then push the repo to OpenShift
